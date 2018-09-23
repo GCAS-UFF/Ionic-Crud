@@ -1,0 +1,7 @@
+{
+  "name": "crudIonic",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

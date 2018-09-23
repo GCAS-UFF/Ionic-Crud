@@ -1,0 +1,13 @@
+<ion-content>
+    <ion-list>
+
+        <ion-radio-group>
+            <ion-item *ngFor="let field of fields">
+                <ion-label>{{ field | titlecase }}</ion-label>
+                <ion-radio [value]="field"></ion-radio>
+            </ion-item>
+        </ion-radio-group>
+    
+    </ion-list>
+    <ion-button (click)="dismiss()">Dismiss</ion-button>
+</ion-content>

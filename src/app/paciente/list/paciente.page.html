@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-title>Lista de Pacientes</ion-title>
+
+    <ion-buttons slot="primary">
+      <ion-button slot="icon-only" (click)="add()">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <crudion-list [list]="objects" 
+                (clicked)="visualizar($event)"
+                [searchOptions]="searchOptions"
+                (search)="searchByEmail($event)">
+  </crudion-list>
+</ion-content>

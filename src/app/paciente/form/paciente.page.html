@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Formulário</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <crudion-form  [group]="formGroup" 
+              [controls]="htmlForm" 
+              (create)="create($event)" 
+              (update)="update($event)" 
+              (delete)="delete($event)">
+  </crudion-form>
+</ion-content>
