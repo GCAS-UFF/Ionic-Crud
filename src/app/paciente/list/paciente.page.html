@@ -13,9 +13,11 @@
 </ion-header>
 
 <ion-content padding>
-  <crudion-list [list]="objects" 
+  <crudion-list [list]="objects"
+                [fields]="fields" 
+                [searchOptions]="searchOptions" 
+                (search)="searchBy($event)" 
                 (clicked)="visualizar($event)"
-                [searchOptions]="searchOptions"
-                (search)="searchByEmail($event)">
+                (order)="orderBy($event)">
   </crudion-list>
 </ion-content>

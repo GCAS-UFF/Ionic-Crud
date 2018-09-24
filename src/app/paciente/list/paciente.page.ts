@@ -3,6 +3,7 @@ import { NavController } from '@ionic/angular';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { PacienteFirestore } from '../paciente.firestore';
 import { Paciente } from '../paciente.model';
+import { GenericUtils } from '../../core/crudion/utils/generic.utils';
 
 @Component({
   selector: 'list-paciente',
@@ -10,13 +11,15 @@ import { Paciente } from '../paciente.model';
   styleUrls: ['./paciente.page.scss'],
 })
 export class PacienteListPage implements OnInit {
-  
-  pacientes:Observable<any[]>;
-  
+
+  pacientes: Observable<any[]>;
+
   objects = new BehaviorSubject(Observable.create([]));
 
   searchOptions: { field: string; message?: string; };
   
+  fields: any;
+
   constructor(private navCtrl: NavController, private db: PacienteFirestore) { }
 
   async ngOnInit() {
@@ -28,6 +31,8 @@ export class PacienteListPage implements OnInit {
 
     this.objects.next(this.db.findAll());
 
+    this.fields = GenericUtils.getFields(Paciente);
+
   }
 
   visualizar(event) {
@@ -38,10 +43,15 @@ export class PacienteListPage implements OnInit {
     this.navCtrl.navigateForward('/pacientes/add');
   }
 
-  searchByEmail(q: string) {
+  searchBy(q: string) {
 
     this.objects.next(this.db.findByField(q, this.searchOptions.field));
 
+  }
+
+  orderBy(q: any) {
+
+    this.objects.next(this.db.findOrderBy(q.field, q.type));
   }
 
 }

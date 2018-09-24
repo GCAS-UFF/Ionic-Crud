@@ -25,11 +25,11 @@ export class PacienteFormPage implements OnInit {
   }
 
   create(event) {
-    this.db.create(event);
+    this.db.create(Paciente, event);
   }
 
   update(event) {
-    this.db.update(event);
+    this.db.update(Paciente, event);
   }
 
   delete(event) {

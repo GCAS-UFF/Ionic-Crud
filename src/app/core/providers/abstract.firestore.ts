@@ -1,6 +1,7 @@
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { map, filter } from 'rxjs/operators';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { GenericUtils } from '../crudion/utils/generic.utils';
 
 export class AbstractFirestore<T> {
 
@@ -10,15 +11,17 @@ export class AbstractFirestore<T> {
         this.collection = this.db.collection<T>(collectionName);
     }
 
-    async create(object: T) {
+    async create(clazz: any, object: T) {
+        let tObject = GenericUtils.getGenericObject(clazz, object);
         let id = await this.collection.ref.doc().id;
-        this.collection.doc(id).set(object);
+        this.collection.doc(id).set(tObject);
     }
 
-    update(object: T) {
+    update(clazz: any, object: T) {
         let id = object['id'];
         delete object['id'];
-        this.collection.doc(id).update(object);
+        let tObject = GenericUtils.getGenericObject(clazz, object);
+        this.collection.doc(id).update(tObject);
     }
 
     delete(object: T) {
@@ -67,6 +70,23 @@ export class AbstractFirestore<T> {
                     )
                 })
             )
+    }
+
+    findOrderBy(orderField: string, orderType: firebase.firestore.OrderByDirection, limit?: number) {
+
+        return Observable.create(subscriber => {
+
+            this.collection.ref
+                .orderBy(orderField, orderType)
+                .limit(10)
+                .onSnapshot(snapshot => {
+                    let results = [];
+                    snapshot.docs.forEach(
+                        doc => results.push(doc.data())
+                    )
+                    subscriber.next(results);
+                })
+        })
     }
 
 }

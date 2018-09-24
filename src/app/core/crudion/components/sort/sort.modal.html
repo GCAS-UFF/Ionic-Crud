@@ -1,13 +1,31 @@
+<ion-header>
+    <ion-toolbar>
+
+        <ion-title>{{ sortHeader }}</ion-title>
+
+        <ion-buttons slot="primary">
+            <ion-button slot="icon-only" (click)="dismiss()">
+                <ion-icon name="close"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+    </ion-toolbar>
+</ion-header>
+
 <ion-content>
     <ion-list>
 
-        <ion-radio-group>
+        <ion-radio-group [(ngModel)]="field">
             <ion-item *ngFor="let field of fields">
+                <ion-icon *ngIf="showType(field, 'asc')" name="arrow-up"></ion-icon>
+                <ion-icon *ngIf="showType(field, 'desc')" name="arrow-down"></ion-icon>
                 <ion-label>{{ field | titlecase }}</ion-label>
-                <ion-radio [value]="field"></ion-radio>
+                <ion-radio (click)="toggle(type)" [value]="field"></ion-radio>
             </ion-item>
         </ion-radio-group>
-    
+
     </ion-list>
-    <ion-button (click)="dismiss()">Dismiss</ion-button>
+    <ion-button expand="block" (click)="sort()" [disabled]="!field">
+        Confirmar
+    </ion-button>
 </ion-content>

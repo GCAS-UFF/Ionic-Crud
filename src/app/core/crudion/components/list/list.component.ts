@@ -24,7 +24,13 @@ export class CrudionListComponent implements OnInit, OnChanges {
     @Output()
     search = new EventEmitter<string>();
 
+    @Output()
+    order = new EventEmitter<{ field: string, type: string }>();
+
+    @Input('fields')
     fields: string[];
+
+    orderBy: { field: string, type: string };
 
     docs: any[];
 
@@ -33,15 +39,17 @@ export class CrudionListComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
-        // this.getFields();
+
     }
 
     ngOnChanges(changes: { [propKey: string]: SimpleChange }): void {
-        this.setDocs(changes);
+        this.setDocs(changes.documentos);
     }
 
-    private setDocs(changes: { [propKey: string]: SimpleChange; }) {
-        let docChanges = changes.documentos.currentValue;
+    private setDocs(value: any) {
+
+        let docChanges = value.currentValue;
+
         if (docChanges) {
             this.documentos = docChanges
                 .subscribe(result => {
@@ -54,18 +62,33 @@ export class CrudionListComponent implements OnInit, OnChanges {
     async sort() {
         const modal = await this.modal.create({
             component: SortModal,
-            componentProps: { fields: this.fields }
+            componentProps: {
+                fields: this.fields,
+                orderBy: this.orderBy
+            }
         })
+
+        modal.onDidDismiss().then(this.orderList())
 
         return await modal.present();
     }
 
 
+    private orderList() {
+        return result => {
+            if (result.data && this.orderBy !== result.data) {
+                console.log(result.data);
+                this.orderBy = result.data;
+                this.order.emit(this.orderBy);
+            }
+        };
+    }
+
     emit(object) {
         this.clicked.emit(object);
     }
 
-    filter(event) {
+    searchField(event) {
         this.search.emit(event.detail.value);
     }
 
