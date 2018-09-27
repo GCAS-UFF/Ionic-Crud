@@ -17,19 +17,32 @@ export class AbstractFirestore<T> {
         this.collection.doc(id).set(tObject);
     }
 
-    update(clazz: any, object: T) {
-        let id = object['id'];
-        delete object['id'];
+    update(clazz: any, id: string, object: T) {
         let tObject = GenericUtils.getGenericObject(clazz, object);
         this.collection.doc(id).update(tObject);
     }
 
-    delete(object: T) {
-        this.collection.doc(object['id']).delete();
+    delete(id: string) {
+        this.collection.doc(id).delete();
     }
 
-    findBy(id: string) {
-        return this.collection.doc(id).get();
+    findBy(clazz: any, id: string): Promise<T> {
+        return new Promise((resolve, reject) => {
+
+            this.collection
+                .doc(id)
+                .get()
+                .toPromise()
+                .then(doc => {
+                    if (doc.exists)
+                        resolve(GenericUtils.getGenericInstance(clazz, doc.data()));
+                    else
+                        resolve(GenericUtils.getGenericInstance(clazz));
+                }).catch(error =>
+                    reject(`Erro ao recuperar documento: ${error}`)
+                );
+        });
+
     }
 
     findByField(text: string, field: string) {

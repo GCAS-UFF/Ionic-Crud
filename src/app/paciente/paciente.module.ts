@@ -11,14 +11,9 @@ import { PacienteFirestore } from './paciente.firestore';
 import { CrudionModule } from '../core/crudion/crudion.module';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: PacienteListPage
-  },
-  {
-    path: 'add',
-    component: PacienteFormPage
-  }
+  { path: '', component: PacienteListPage },
+  { path: 'add', component: PacienteFormPage },
+  { path: 'edit/:id', component: PacienteFormPage }
 ];
 
 @NgModule({

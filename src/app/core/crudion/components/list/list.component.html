@@ -12,15 +12,17 @@
     <ion-searchbar debounce="500" (ionChange)="searchField($event)" animated placeholder="{{ searchOptions.message }}"></ion-searchbar>
 </ion-toolbar>
 
-
-<ion-row>
-    <ion-col size-sm="12" size-md="6" size-lg="4" *ngFor="let documento of docs" (click)="emit(documento)">
-        <ion-card>
-            <ion-card-content>
-                <ion-row *ngFor="let key of objectKeys(documento)">
-                    <p [hidden]="key === 'id'"><b>{{ key | titlecase }}:</b> {{ documento[key] }}</p>
-                </ion-row>
-            </ion-card-content>
-        </ion-card>
-    </ion-col>
-</ion-row>
+<div class="table-responsive-vertical shadow-z-1" margin-top>
+    <table id="table" class="table table-mc-light-blue table-bordered">
+        <thead>
+            <tr>
+                <th *ngFor="let field of fields">{{ field | titlecase}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let doc of docs" (click)="emit(doc)">
+                <td *ngFor="let field of fields" data-title="{{field | titlecase}}">{{ doc[field] }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -9,10 +9,12 @@
 
 <ion-content padding>
 
-  <crudion-form  [group]="formGroup" 
+  <crudion-form *ngIf="formGroup"
+              [edit]="edit" 
+              [group]="formGroup" 
               [controls]="htmlForm" 
               (create)="create($event)" 
               (update)="update($event)" 
-              (delete)="delete($event)">
+              (delete)="delete()">
   </crudion-form>
 </ion-content>

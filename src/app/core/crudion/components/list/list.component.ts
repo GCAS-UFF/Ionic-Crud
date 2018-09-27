@@ -97,4 +97,5 @@ export class CrudionListComponent implements OnInit, OnChanges {
         delete this.fields['id'];
 
     }
+
 } 

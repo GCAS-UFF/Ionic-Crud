@@ -1,8 +1,12 @@
 <form [formGroup]="formGroup">
-    <ion-item *ngFor="let control of formControls" [hidden]="control.name === 'id'">
-        <ion-label position="floating">{{ control.name |titlecase }}</ion-label>
-        <ion-input [type]="control.htmlType" [formControlName]="control.name" clearInput></ion-input>
-    </ion-item>
+    <div *ngFor="let control of formControls" [hidden]="control.name === 'id'">
+
+        <ion-item>
+            <ion-label position="floating">{{ control.name |titlecase }}</ion-label>
+            <ion-input [type]="control.htmlType" [formControlName]="control.name" clearInput></ion-input>
+        </ion-item>
+        <error-messages [control]="formGroup.controls[control.name]"></error-messages>
+    </div>
     <div *ngIf="!edit; else editable">
         <ion-button expand="block" (click)="createEmit()" [disabled]="!formGroup.valid">Criar</ion-button>
     </div>

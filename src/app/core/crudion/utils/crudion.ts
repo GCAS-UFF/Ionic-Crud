@@ -3,7 +3,7 @@ import { getValid } from '../annotations/valid.annotation';
 import { getHtmlType } from '../annotations/htmltype.annotation';
 import { getInitValue } from "../annotations/initialvalue.annotation";
 
-export function createFormTo(object: any) {
+export function createFormTo(object: any, edit: boolean) {
 
     let formBuilder = new FormBuilder();
 
@@ -18,7 +18,7 @@ export function createFormTo(object: any) {
         let type = getHtmlType(object, field);
         let initValue = getInitValue(object, field);
         
-        if(initValue !== undefined){
+        if(initValue !== undefined && !edit){
             object[field] = initValue;
         }
         

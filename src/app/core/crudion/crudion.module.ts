@@ -5,6 +5,7 @@ import { IonicModule } from "@ionic/angular";
 import { CrudionFormComponent } from "./components/form/form.component";
 import { CrudionListComponent } from "./components/list/list.component";
 import { SortModal } from './components/sort/sort.modal';
+import { ErrorMessages } from "./components/error-message/error-message.component";
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ import { SortModal } from './components/sort/sort.modal';
     declarations: [
         CrudionFormComponent, 
         CrudionListComponent,
-        SortModal
+        SortModal,
+        ErrorMessages
     ],
     entryComponents: [
         SortModal

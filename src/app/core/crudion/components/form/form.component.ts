@@ -9,8 +9,8 @@ export class CrudionFormComponent implements OnInit {
 
     objeto: any;
 
-    @Input('edit')
-    edicao: boolean
+    @Input()
+    edit: boolean
 
     @Input('group')
     formGroup: FormGroup;
