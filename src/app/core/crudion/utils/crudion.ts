@@ -2,6 +2,8 @@ import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { getValid } from '../annotations/valid.annotation';
 import { getHtmlType } from '../annotations/htmltype.annotation';
 import { getInitValue } from "../annotations/initialvalue.annotation";
+import { HTMLType } from "../enums/htmltype.enum";
+import { getDateFormat } from "../annotations/date-format.annotations";
 
 export function createFormTo(object: any, edit: boolean) {
 
@@ -27,6 +29,10 @@ export function createFormTo(object: any, edit: boolean) {
         let html = {
             name: field,
             htmlType: type
+        }
+
+        if(type === HTMLType.DATE && getDateFormat(object, field)){
+            html['dateOptions'] = getDateFormat(object, field);
         }
 
         htmlOptions.push(html);

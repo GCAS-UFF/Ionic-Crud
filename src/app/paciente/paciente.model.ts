@@ -3,6 +3,7 @@ import { HtmlType } from "../core/crudion/annotations/htmltype.annotation";
 import { Valid } from "../core/crudion/annotations/valid.annotation";
 import { HTMLType } from "../core/crudion/enums/htmltype.enum";
 import { InitValue } from "../core/crudion/annotations/initialvalue.annotation";
+import { DateFormat } from "../core/crudion/annotations/date-format.annotations";
 
 export class Paciente {
 
@@ -12,6 +13,11 @@ export class Paciente {
     @InitValue('')
     @Valid([Validators.required])
     private age: number = Number(0);
+
+    @DateFormat('DD/MM/YYYY')
+    @HtmlType(HTMLType.DATE)
+    @InitValue('')
+    private data: Date = new Date();
 
     @HtmlType(HTMLType.EMAIL)
     @Valid([Validators.required, Validators.email])

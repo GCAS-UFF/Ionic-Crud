@@ -3,7 +3,14 @@
 
         <ion-item>
             <ion-label position="floating">{{ control.name |titlecase }}</ion-label>
-            <ion-input [type]="control.htmlType" [formControlName]="control.name" clearInput></ion-input>
+
+            <ion-input *ngIf="control.htmlType !== 'date'; else datePicker" [type]="control.htmlType" [formControlName]="control.name"
+                clearInput>
+            </ion-input>
+
+            <ng-template #datePicker>
+                <ion-datetime [pickerOptions]="control.dateOptions.format" [formControlName]="control.name"></ion-datetime>
+            </ng-template>
         </ion-item>
         <error-messages [control]="formGroup.controls[control.name]"></error-messages>
     </div>
